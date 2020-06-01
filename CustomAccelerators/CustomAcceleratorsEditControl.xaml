@@ -1,0 +1,50 @@
+﻿<UserControl
+    x:Class="CustomAccelerators.CustomAcceleratorsEditControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CustomAccelerators"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock x:Name="TxblStatus" Foreground="Red" />
+        <ListBox Grid.Row="1" PreviewKeyDown="MainListBox_PreviewKeyDown" PreviewKeyUp="MainListBox_PreviewKeyUp"  SelectionChanged="MainListBox_SelectionChanged"  x:Name="MainListBox">
+            <ListBox.ItemTemplate>
+                <DataTemplate x:DataType="local:AcceleratorDefinition">
+                    <!--KeyDown="CustomAcceleratorsEditControl_KeyDown" KeyUp="CustomAcceleratorsEditControl_KeyUp"-->
+                    <Border BorderThickness="0,0,0,1" BorderBrush="{ThemeResource ButtonBorderThemeBrush}">
+                    <StackPanel Orientation="Horizontal" >
+                        <StackPanel.KeyboardAccelerators>
+                            <KeyboardAccelerator Key="Down" IsEnabled="False"/>
+                            <KeyboardAccelerator Key="Up" IsEnabled="False"/>
+                        </StackPanel.KeyboardAccelerators>
+
+                        <TextBlock TextWrapping="WrapWholeWords" ToolTipService.ToolTip="{x:Bind Label}" Width="100" HorizontalTextAlignment="Left" VerticalAlignment="Center" Text="{x:Bind Label}"/>
+                        <Border  Margin="5" CornerRadius="4" BorderThickness="2" BorderBrush="{ThemeResource SystemAccentColorDark1}">
+                            <TextBlock  Margin="1,4,5,5" VerticalAlignment="Center" >
+                                <Run Text="{x:Bind DontDisplayNone( Modifiers), Mode=OneWay}" />
+                                <Run Text="{x:Bind Key, Mode=OneWay}" />
+                            </TextBlock>
+                        </Border>
+                    </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="HorizontalContentAlignment"  Value="Stretch" />
+                    <Setter Property="Padding"  Value="5,1,5,1" />
+                </Style>
+            </ListBox.ItemContainerStyle>
+
+        </ListBox>
+
+    </Grid>
+</UserControl>

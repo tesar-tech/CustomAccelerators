@@ -1,0 +1,43 @@
+﻿<Page
+    x:Class="CustomAccelerators.Sample.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CustomAccelerators.Sample"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:ca="using:CustomAccelerators"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+ 
+    <SplitView x:Name="splitView" PaneBackground="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
+           IsPaneOpen="False" OpenPaneLength="300"  DisplayMode="Overlay">
+        <SplitView.Pane>
+            <StackPanel Orientation="Vertical">
+                <TextBlock TextWrapping="WrapWholeWords">Here you can edit your keyboard shortcuts by selecting the action a pressing key combination</TextBlock>
+                <ca:CustomAcceleratorsEditControl TabIndex="2" />
+            </StackPanel>
+        </SplitView.Pane>
+
+        <StackPanel  Orientation="Vertical">
+            <Button Click="OpenSettings_Click">Open Settings</Button>
+            <Button Click="HelloButton_Click" Margin="5">
+                <TextBlock >
+                <Run Text="{x:Bind CaHello.TooltipString, Mode=OneWay}"  />
+                <Run Text="I have been pressed:"  />
+                <Run Text="0" x:Name="PressedCountHelloButton" />
+                <Run Text="x"  />
+                </TextBlock>
+                <Button.KeyboardAccelerators>
+                    <ca:CustomAccelerator x:Name="CaHello"  Identity="Hello"/>
+                </Button.KeyboardAccelerators>
+            </Button>
+            <Button Click="AnotherButton_Click" Margin="5">
+                <TextBlock Text="0" x:Name="PressedCountAnotherButton" />
+                <Button.KeyboardAccelerators>
+                    <ca:CustomAccelerator  Identity="Another Accelerator"/>
+                </Button.KeyboardAccelerators>
+            </Button>
+        </StackPanel>
+    </SplitView>
+</Page>
