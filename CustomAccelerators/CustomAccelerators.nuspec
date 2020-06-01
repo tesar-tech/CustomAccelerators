@@ -1,6 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!-- Usefull links: https://msicc.net/how-to-create-a-multi-architecture-nuget-package-from-a-uwp-class-library/ 
 https://docs.microsoft.com/en-us/nuget/guides/create-uwp-packages -->
-<?xml version="1.0" encoding="utf-8"?>
 <package >
   <metadata>
     <id>CustomAccelerators</id>
