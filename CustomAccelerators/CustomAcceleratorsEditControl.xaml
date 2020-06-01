@@ -27,7 +27,7 @@
                         </StackPanel.KeyboardAccelerators>
 
                         <TextBlock TextWrapping="WrapWholeWords" ToolTipService.ToolTip="{x:Bind Label}" Width="100" HorizontalTextAlignment="Left" VerticalAlignment="Center" Text="{x:Bind Label}"/>
-                        <Border  Margin="5" CornerRadius="4" BorderThickness="2" BorderBrush="{ThemeResource SystemAccentColorDark1}">
+                        <Border VerticalAlignment="Center"  Margin="5" CornerRadius="4" BorderThickness="2" BorderBrush="{ThemeResource SystemAccentColorDark1}">
                             <TextBlock  Margin="1,4,5,5" VerticalAlignment="Center" >
                                 <Run Text="{x:Bind DontDisplayNone( Modifiers), Mode=OneWay}" />
                                 <Run Text="{x:Bind Key, Mode=OneWay}" />

@@ -36,7 +36,7 @@ namespace CustomAccelerators.Sample
                 {
                     ("Hello","I am Hello Button",VirtualKey.H,VirtualKeyModifiers.Control|VirtualKeyModifiers.Shift),
                     ("Another Accelerator","",VirtualKey.PageDown,VirtualKeyModifiers.None),
-                    ("notInXamlButton","Not In Xaml now, but could be in a future",VirtualKey.F10,VirtualKeyModifiers.Menu)
+                    ("notInXamlButton","Not In Xaml now, but could be in a future thi is sooooo long so longgg",VirtualKey.F10,VirtualKeyModifiers.Menu)
 
                 };
 
