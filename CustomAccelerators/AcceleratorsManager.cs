@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -51,12 +52,16 @@ namespace CustomAccelerators
             }
 
             if (definitionForCa == null)
-                throw new Exception($"Ther is no definition for accelerator{ca.Identity}");
-
-            definitionForCa.CustomAccelerators.Add(ca);
-            ca.SetKey(definitionForCa.Key);
-            ca.SetModifiers(definitionForCa.Modifiers);
-            ca.Label = definitionForCa.Label;
+            {
+                Debug.WriteLine($"There is no definition for accelerator {ca.Identity}");
+            }
+            else
+            {
+                definitionForCa.CustomAccelerators.Add(ca);
+                ca.SetKey(definitionForCa.Key);
+                ca.SetModifiers(definitionForCa.Modifiers);
+                ca.Label = definitionForCa.Label;
+            }
 
         }
 

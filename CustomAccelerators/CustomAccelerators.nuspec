@@ -1,8 +1,10 @@
+<!-- Usefull links: https://msicc.net/how-to-create-a-multi-architecture-nuget-package-from-a-uwp-class-library/ 
+https://docs.microsoft.com/en-us/nuget/guides/create-uwp-packages -->
 <?xml version="1.0" encoding="utf-8"?>
 <package >
   <metadata>
     <id>CustomAccelerators</id>
-    <version>0.0.6</version>
+    <version>0.0.1</version>
     <title>Custom Accelerators</title>
     <authors>tesar.tech</authors>
     <owners>tesar.tech</owners>
@@ -22,25 +24,58 @@
     </dependencies>
  </metadata>
       <files>
- 
-       <file src="bin\x86\Debug\CustomAccelerators.dll" target="runtimes\x86\lib\uap10.0"/> 
-       <file src="bin\x86\Debug\CustomAccelerators.pdb" target="runtimes\x86\lib\uap10.0"/> 
-       <file src="bin\x86\Debug\CustomAccelerators.pri" target="runtimes\x86\lib\uap10.0"/> 
-       <file src="bin\x86\Debug\CustomAccelerators.XML" target="runtimes\x86\lib\uap10.0"/> 
-       <file src="bin\x86\Debug\Microsoft.UI.Xaml.Markup.winmd" target="runtimes\x86\lib\uap10.0"/> 
+        <!-- x86 -->
+       <file src="bin\x86\Release\CustomAccelerators.dll" target="runtimes\x86\lib\uap10.0"/> 
+       <file src="bin\x86\Release\CustomAccelerators.pdb" target="runtimes\x86\lib\uap10.0"/> 
+       <file src="bin\x86\Release\CustomAccelerators.pri" target="runtimes\x86\lib\uap10.0"/> 
+       <!-- <file src="bin\x86\Release\CustomAccelerators.XML" target="runtimes\x86\lib\uap10.0"/>  -->
+       <!-- <file src="bin\x86\Release\Microsoft.UI.Xaml.Markup.winmd" target="runtimes\x86\lib\uap10.0"/>  -->
       
-       <file src="bin\x86\Debug\CustomAccelerators\CustomAccelerators.xr.xml" target="runtimes\x86\lib\uap10.0\CustomAccelerators"/> 
-       <file src="bin\x86\Debug\CustomAccelerators\CustomAcceleratorsEditControl.xaml" target="runtimes\x86\lib\uap10.0\CustomAccelerators"/> 
-       <file src="bin\x86\Debug\CustomAccelerators\CustomAcceleratorsEditControl.xbf" target="runtimes\x86\lib\uap10.0\CustomAccelerators"/> 
+       <file src="bin\x86\Release\CustomAccelerators\CustomAccelerators.xr.xml" target="runtimes\x86\lib\uap10.0\CustomAccelerators"/> 
+       <file src="bin\x86\Release\CustomAccelerators\CustomAcceleratorsEditControl.xaml" target="runtimes\x86\lib\uap10.0\CustomAccelerators"/> 
+       <!-- <file src="bin\x86\Release\CustomAccelerators\CustomAcceleratorsEditControl.xbf" target="runtimes\x86\lib\uap10.0\CustomAccelerators"/>  -->
 
-       <file src="bin\Debug\CustomAccelerators.dll" target="lib\uap10.0"/> 
-       <file src="bin\Debug\CustomAccelerators.pdb" target="lib\uap10.0"/> 
-       <file src="bin\Debug\CustomAccelerators.pri" target="lib\uap10.0"/> 
-       <file src="bin\Debug\Microsoft.UI.Xaml.Markup.winmd" target="lib\uap10.0"/> 
+        <!-- x86 -->
+       <file src="bin\x64\Release\CustomAccelerators.dll" target="runtimes\x64\lib\uap10.0"/> 
+       <file src="bin\x64\Release\CustomAccelerators.pdb" target="runtimes\x64\lib\uap10.0"/> 
+       <file src="bin\x64\Release\CustomAccelerators.pri" target="runtimes\x64\lib\uap10.0"/> 
+       <!-- <file src="bin\x64\Release\CustomAccelerators.XML" target="runtimes\x64\lib\uap10.0"/>  -->
+       <!-- <file src="bin\x64\Release\Microsoft.UI.Xaml.Markup.winmd" target="runtimes\x64\lib\uap10.0"/>  -->
       
-       <file src="bin\Debug\CustomAccelerators\CustomAccelerators.xr.xml" target="lib\uap10.0\CustomAccelerators"/>  
-       <file src="bin\Debug\CustomAccelerators\CustomAcceleratorsEditControl.xaml" target="lib\uap10.0\CustomAccelerators"/> 
-       <file src="bin\Debug\CustomAccelerators\CustomAcceleratorsEditControl.xbf" target="lib\uap10.0\CustomAccelerators"/> 
+       <file src="bin\x64\Release\CustomAccelerators\CustomAccelerators.xr.xml" target="runtimes\x64\lib\uap10.0\CustomAccelerators"/> 
+       <file src="bin\x64\Release\CustomAccelerators\CustomAcceleratorsEditControl.xaml" target="runtimes\x64\lib\uap10.0\CustomAccelerators"/> 
+       <!-- <file src="bin\x64\Release\CustomAccelerators\CustomAcceleratorsEditControl.xbf" target="runtimes\x64\lib\uap10.0\CustomAccelerators"/>  -->
+
+        <!-- ARM -->
+       <file src="bin\ARM\Release\CustomAccelerators.dll" target="runtimes\ARM\lib\uap10.0"/> 
+       <file src="bin\ARM\Release\CustomAccelerators.pdb" target="runtimes\ARM\lib\uap10.0"/> 
+       <file src="bin\ARM\Release\CustomAccelerators.pri" target="runtimes\ARM\lib\uap10.0"/> 
+       <!-- <file src="bin\ARM\Release\CustomAccelerators.XML" target="runtimes\ARM\lib\uap10.0"/>  -->
+       <!-- <file src="bin\ARM\Release\Microsoft.UI.Xaml.Markup.winmd" target="runtimes\ARM\lib\uap10.0"/>  -->
+      
+       <file src="bin\ARM\Release\CustomAccelerators\CustomAccelerators.xr.xml" target="runtimes\ARM\lib\uap10.0\CustomAccelerators"/> 
+       <file src="bin\ARM\Release\CustomAccelerators\CustomAcceleratorsEditControl.xaml" target="runtimes\ARM\lib\uap10.0\CustomAccelerators"/> 
+       <!-- <file src="bin\ARM\Release\CustomAccelerators\CustomAcceleratorsEditControl.xbf" target="runtimes\ARM\lib\uap10.0\CustomAccelerators"/>  -->
+
+      <!-- ARM64 -->
+       <file src="bin\ARM64\Release\CustomAccelerators.dll" target="runtimes\ARM64\lib\uap10.0"/> 
+       <file src="bin\ARM64\Release\CustomAccelerators.pdb" target="runtimes\ARM64\lib\uap10.0"/> 
+       <file src="bin\ARM64\Release\CustomAccelerators.pri" target="runtimes\ARM64\lib\uap10.0"/> 
+       <!-- <file src="bin\ARM64\Release\CustomAccelerators.XML" target="runtimes\ARM64\lib\uap10.0"/>  -->
+       <!-- <file src="bin\ARM64\Release\Microsoft.UI.Xaml.Markup.winmd" target="runtimes\ARM64\lib\uap10.0"/>  -->
+      
+       <file src="bin\ARM64\Release\CustomAccelerators\CustomAccelerators.xr.xml" target="runtimes\ARM64\lib\uap10.0\CustomAccelerators"/> 
+       <file src="bin\ARM64\Release\CustomAccelerators\CustomAcceleratorsEditControl.xaml" target="runtimes\ARM64\lib\uap10.0\CustomAccelerators"/> 
+       <!-- <file src="bin\ARM64\Release\CustomAccelerators\CustomAcceleratorsEditControl.xbf" target="runtimes\ARM64\lib\uap10.0\CustomAccelerators"/>  -->
+
+       <file src="bin\Release\CustomAccelerators.dll" target="lib\uap10.0"/> 
+       <file src="bin\Release\CustomAccelerators.pdb" target="lib\uap10.0"/> 
+       <file src="bin\Release\CustomAccelerators.pri" target="lib\uap10.0"/> 
+       <!-- <file src="bin\Release\Microsoft.UI.Xaml.Markup.winmd" target="lib\uap10.0"/>  -->
+      
+       <file src="bin\Release\CustomAccelerators\CustomAccelerators.xr.xml" target="lib\uap10.0\CustomAccelerators"/>  
+       <file src="bin\Release\CustomAccelerators\CustomAcceleratorsEditControl.xaml" target="lib\uap10.0\CustomAccelerators"/> 
+       <!-- <file src="bin\Release\CustomAccelerators\CustomAcceleratorsEditControl.xbf" target="lib\uap10.0\CustomAccelerators"/>  -->
 
 
     </files>

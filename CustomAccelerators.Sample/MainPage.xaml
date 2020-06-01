@@ -23,13 +23,13 @@
             <Button Click="OpenSettings_Click">Open Settings</Button>
             <Button Click="HelloButton_Click" Margin="5">
                 <TextBlock >
-                <Run Text="{x:Bind CaHello.TooltipString, Mode=OneWay}"  />
+                <Run Text="{x:Bind CaHellos.TooltipString, Mode=OneWay}"  />
                 <Run Text="I have been pressed:"  />
                 <Run Text="0" x:Name="PressedCountHelloButton" />
                 <Run Text="x"  />
                 </TextBlock>
                 <Button.KeyboardAccelerators>
-                    <ca:CustomAccelerator x:Name="CaHello"  Identity="Hello"/>
+                    <ca:CustomAccelerator x:Name="CaHellos"  Identity="Hellos"/>
                 </Button.KeyboardAccelerators>
             </Button>
             <Button Click="AnotherButton_Click" Margin="5">

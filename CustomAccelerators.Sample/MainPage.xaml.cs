@@ -25,14 +25,20 @@ namespace CustomAccelerators.Sample
     {
         public MainPage()
         {
+            this.Loaded += MainPage_Loaded;
             this.InitializeComponent();
-            var acceleratorsList = new List<(string identity, string label, VirtualKey key, VirtualKeyModifiers modifiers)>()
-            {
-                ("Hello","I am Hello Button",VirtualKey.H,VirtualKeyModifiers.Control|VirtualKeyModifiers.Shift),
-                ("Another Accelerator","",VirtualKey.PageDown,VirtualKeyModifiers.None),
-                ("notInXamlButton","Not In Xaml now, but could be in a future",VirtualKey.F10,VirtualKeyModifiers.Menu)
 
-            };
+        }
+
+        private void MainPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            var acceleratorsList = new List<(string identity, string label, VirtualKey key, VirtualKeyModifiers modifiers)>()
+                {
+                    ("Hello","I am Hello Button",VirtualKey.H,VirtualKeyModifiers.Control|VirtualKeyModifiers.Shift),
+                    ("Another Accelerator","",VirtualKey.PageDown,VirtualKeyModifiers.None),
+                    ("notInXamlButton","Not In Xaml now, but could be in a future",VirtualKey.F10,VirtualKeyModifiers.Menu)
+
+                };
 
             AcceleratorsManager.AddDefaultsAndLoadFromStorage(acceleratorsList);
         }
