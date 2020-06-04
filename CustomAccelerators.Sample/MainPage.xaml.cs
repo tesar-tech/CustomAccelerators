@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.System;
@@ -25,18 +26,18 @@ namespace CustomAccelerators.Sample
     {
         public MainPage()
         {
-            this.Loaded += MainPage_Loaded;
             this.InitializeComponent();
-
         }
 
-        private void MainPage_Loaded(object sender, RoutedEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            base.OnNavigatedTo(e);
             var acceleratorsList = new List<(string identity, string label, VirtualKey key, VirtualKeyModifiers modifiers)>()
                 {
                     ("Hello","I am Hello Button",VirtualKey.H,VirtualKeyModifiers.Control|VirtualKeyModifiers.Shift),
                     ("Another Accelerator","",VirtualKey.PageDown,VirtualKeyModifiers.None),
-                    ("notInXamlButton","Not In Xaml now, but could be in a future thi is sooooo long so longgg",VirtualKey.F10,VirtualKeyModifiers.Menu)
+                    ("notInXamlButton","Not In Xaml now, but could be in a future this is long text to test UI",VirtualKey.F10,VirtualKeyModifiers.Menu),
+                    ("SimpleAccelerator","Simple Accelerator",VirtualKey.F,VirtualKeyModifiers.Control|VirtualKeyModifiers.Shift),
 
                 };
 
@@ -53,12 +54,17 @@ namespace CustomAccelerators.Sample
         private void AnotherButton_Click(object sender, RoutedEventArgs e)
         {
             PressedCountAnotherButton.Text = (++pressedCountAnotherButton).ToString();
-
         }
 
         private void OpenSettings_Click(object sender, RoutedEventArgs e)
         {
             splitView.IsPaneOpen = true;
+        }
+
+        readonly Random rnd = new Random();
+        private void SimpleButton_Click(object sender, RoutedEventArgs e)
+        {
+            SimpleButton.Content = $"RND num: {rnd.Next(0,1000)}";
         }
     }
 }

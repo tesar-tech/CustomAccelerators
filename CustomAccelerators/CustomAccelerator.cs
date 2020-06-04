@@ -8,12 +8,28 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.UserDataTasks;
 using Windows.System;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 
 namespace CustomAccelerators
 {
     public class CustomAccelerator : KeyboardAccelerator, INotifyPropertyChanged
     {
+
+        public CustomAccelerator()
+        {
+        }
+        public CustomAccelerator(Button btn, string identity, bool isEnabled)
+        {
+            buttonParent = btn;
+            IsEnabled = isEnabled;
+            Identity = identity;
+        }
+        /// <summary>
+        /// this is for setting tooltip when key changes. This is only set when using Extension
+        /// </summary>
+        private Button buttonParent;
+
         private string _identity;
         public string Identity
         {
@@ -36,13 +52,19 @@ namespace CustomAccelerators
         public string TooltipString
         {
             get => _TooltipString;
-           private set => Set(ref _TooltipString, value);
+            private set
+            {
+                Set(ref _TooltipString, value);
+                if(buttonParent!= null)
+                    ToolTipService.SetToolTip(buttonParent, value);
+            }
         }
 
         /// <summary>
         /// method for refreshing tooltip string when key or modifiers are changed
+        /// When accelerator is disabled => dont add shortcut to tooltip
         /// </summary>
-        private void ConstructTooltipString() => TooltipString = $"{Label} ({GetAcceleratorString()})";
+        private void ConstructTooltipString() => TooltipString = IsEnabled ? $"{Label} ({GetAcceleratorString()})" : $"{Label}";
 
         string GetAcceleratorString()
         {
@@ -50,6 +72,10 @@ namespace CustomAccelerators
             return modStr + base.Key.ToString();
         }
 
+        internal void RefreshTooltip()
+        {
+            OnPropertyChanged(nameof(TooltipString));
+        }
 
         private string _Label;
         /// <summary>
@@ -71,15 +97,34 @@ namespace CustomAccelerators
         [Obsolete("This doesn't set the modifiers. Set default value in definition")]
         public new VirtualKeyModifiers Modifiers { get; set; }
 
+        /// <summary>
+        /// simplification when creating modifiers - this will construct tooltip only once
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="modifiers"></param>
+        /// <param name="label"></param>
+        internal void SetKeyModifierLabel(VirtualKey key, VirtualKeyModifiers modifiers, string label)
+        {
+            base.Key = key;
+            base.Modifiers = modifiers;
+            Label = label;
+        }
         internal void SetKey(VirtualKey key)
         {
             base.Key = key;
+
             ConstructTooltipString();
         }
 
         internal void SetModifiers(VirtualKeyModifiers modifiers)
         {
             base.Modifiers = modifiers;
+            ConstructTooltipString();
+        }
+
+        internal void SetIsEnabled(bool isEnabled)
+        {
+            IsEnabled = isEnabled;
             ConstructTooltipString();
         }
 
@@ -96,5 +141,8 @@ namespace CustomAccelerators
             storage = value;
             OnPropertyChanged(propertyName);
         }
+    }
+    public class CustomAcceleratorSecondary:CustomAccelerator
+    {
     }
 }

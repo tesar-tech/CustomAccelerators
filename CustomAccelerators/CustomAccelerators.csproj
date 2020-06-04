@@ -126,6 +126,7 @@
     <Compile Include="CustomAcceleratorsEditControl.xaml.cs">
       <DependentUpon>CustomAcceleratorsEditControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Extension.cs" />
     <Compile Include="LocalSettingsStorage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\CustomAccelerators.rd.xml" />

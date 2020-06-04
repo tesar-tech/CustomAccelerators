@@ -39,7 +39,10 @@ namespace CustomAccelerators
                 if (_key == value) return;
                 Set(ref _key, value);
                 LocalSettingsStorage.WriteToLocalSettingKey(this);
-                CustomAccelerators.ForEach(x => x.SetKey(value));
+                if(CustomAccelerator!=null)
+                CustomAccelerator.SetKey(value);
+                if (CustomAcceleratorSecondary != null)
+                    CustomAcceleratorSecondary.SetKey(value);
             }
         }
 
@@ -58,15 +61,24 @@ namespace CustomAccelerators
                 if (_modifiers == value) return;
                 Set(ref _modifiers, value);
                 LocalSettingsStorage.WriteToLocalSettingModifiers(this);
-                CustomAccelerators.ForEach(x => x.SetModifiers(value));
+                if(CustomAccelerator!=null)
+                    CustomAccelerator.SetModifiers(value);
+                if (CustomAcceleratorSecondary != null)
+                    CustomAcceleratorSecondary.SetModifiers(value);
             }
         }
+        //internal void RefreshAllTooltips()
+        //{
+        //    CustomAccelerators.ForEach(x => x.RefreshTooltip());
+        //}
+
         /// <summary>
         /// List of xaml accelerators with same identity...You can have multiple accelerators with same identity.
         /// It is all bcs of: https://stackoverflow.com/questions/53735503/keyboard-accelerator-stops-working-in-uwp-app/62025749#62025749
         /// </summary>
-        public List<CustomAccelerator> CustomAccelerators { get; set; } = new List<CustomAccelerator>();
-
+        //public List<CustomAccelerator> CustomAccelerators { get; set; } = new List<CustomAccelerator>();
+        public CustomAccelerator CustomAccelerator { get; set; }
+        public CustomAccelerator CustomAcceleratorSecondary { get; internal set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -81,6 +93,7 @@ namespace CustomAccelerators
             storage = value;
             OnPropertyChanged(propertyName);
         }
+
 
     }
 }

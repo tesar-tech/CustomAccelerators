@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Resources;
 using Windows.Security.Cryptography.Certificates;
 using Windows.Storage;
 using Windows.System;
@@ -57,10 +58,11 @@ namespace CustomAccelerators
             }
             else
             {
-                definitionForCa.CustomAccelerators.Add(ca);
-                ca.SetKey(definitionForCa.Key);
-                ca.SetModifiers(definitionForCa.Modifiers);
-                ca.Label = definitionForCa.Label;
+                if(ca.GetType()== typeof(CustomAcceleratorSecondary))
+                    definitionForCa.CustomAcceleratorSecondary = ca;
+                else
+                definitionForCa.CustomAccelerator = ca;
+                ca.SetKeyModifierLabel(definitionForCa.Key, definitionForCa.Modifiers, definitionForCa.Label);
             }
 
         }
@@ -73,18 +75,20 @@ namespace CustomAccelerators
         ///Also add hanging accelerators (previously constructed by xaml)
         /// </summary>
         /// <param name="defaults"></param>
-        public static void AddDefaultsAndLoadFromStorage(IEnumerable<(string identity,string label, VirtualKey key, VirtualKeyModifiers modifiers)> defaults)
+        public static void AddDefaultsAndLoadFromStorage(IEnumerable<(string identity, string label, VirtualKey key, VirtualKeyModifiers modifiers)> defaults, ResourceLoader resourceLoader = null)
         {
             if (_isLoaded)//Let it construct just once (dont want to add same accelerator when user returns to main page)
-                return;
-            foreach (var (identity,label, keyFromDefinition,modifiersFromDefinition) in defaults)
             {
-            
-                AcceleratorDefinition accDef = new AcceleratorDefinition(identity,label);
+                return;
+            }
+            foreach (var (identity, label, keyFromDefinition, modifiersFromDefinition) in defaults)
+            {
+
+                AcceleratorDefinition accDef = new AcceleratorDefinition(identity, label);
                 var keyFromStorageSetting = LocalSettingsStorage.GetStoredKeyForIdentity(identity);
                 accDef.Key = keyFromStorageSetting != VirtualKey.None ? keyFromStorageSetting : keyFromDefinition;
 
-                var (wasSet,modifiersFromStorageSetting )= LocalSettingsStorage.GetStoredModifiersForIdentity(identity);
+                var (wasSet, modifiersFromStorageSetting) = LocalSettingsStorage.GetStoredModifiersForIdentity(identity);
                 accDef.Modifiers = wasSet ? modifiersFromStorageSetting : modifiersFromDefinition;
 
                 AcceleratorsDefinitions.Add(accDef);
@@ -102,7 +106,7 @@ namespace CustomAccelerators
         /// </summary>
         public static ObservableCollection<AcceleratorDefinition> AcceleratorsDefinitions { get; set; } = new ObservableCollection<AcceleratorDefinition>();
 
-       
+
     }
 
 }

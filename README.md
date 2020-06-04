@@ -52,6 +52,8 @@ AcceleratorsManager.AddDefaultsAndLoadFromStorage(acceleratorsList);
 
 ## Notes
 
+- When accelerator is disabled, shortcut is not displayed in tooltip. (when using attached property)
+- Shortcut in tooltip will be refreshed with new accelerator. This is true only when using attached property, but can be accomplished also with binding to button's tooltip (original KeyboardAccelerator doesn't support this refresh).
 - It does save the shortcuts persistently (using local settings).
 - You can't edit the appearance of `CustomAcceleratorsEditControl` (yet).
 - Dont't set `Key`, `Modifiers` or `Label` in xaml. Only within definition.
