@@ -27,42 +27,14 @@ namespace CustomAccelerators
         public CustomAcceleratorsEditControl()
         {
             this.InitializeComponent();
-            //MainListBox.ItemsSource = new List<AcceleratorDefinition> { new AcceleratorDefinition("vddd")  };
-
             MainListBox.ItemsSource =AcceleratorsManager.AcceleratorsDefinitions;
-
-            //KeyDown += CustomAcceleratorsEditControl_KeyDown;
-            //KeyUp += CustomAcceleratorsEditControl_KeyUp;
-                
-                //AcceleratorsManager.AcceleratorsDefinitions;
         }
 
-        private void CustomAcceleratorsEditControl_KeyUp(object sender, KeyRoutedEventArgs e)
-        {
- 
-
-        }
-
-        private void CustomAcceleratorsEditControl_KeyDown(object sender, KeyRoutedEventArgs e)
-        {
-            e.Handled = true;
-        }
-
-        private void EditButton_Clicked(object sender, RoutedEventArgs e)
-        {
-            VirtualKeyModifiers mod = VirtualKeyModifiers.Control | VirtualKeyModifiers.Menu;
-            Debug.WriteLine(mod.ToString());
-            Debug.WriteLine((int)mod);
-            var btn = (Button)sender;
-            AcceleratorDefinition ad = (AcceleratorDefinition)btn.Tag;
-            ad.Key = VirtualKey.A;
-        }
-
-        AcceleratorDefinition currentad;
+        AcceleratorDefinition currentAd;
         private void MainListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selectedItem = MainListBox.SelectedItem;
-            currentad = (AcceleratorDefinition)selectedItem;
+            currentAd = (AcceleratorDefinition)selectedItem;
         }
 
         private void MainListBox_PreviewKeyDown(object sender, KeyRoutedEventArgs e)
@@ -73,21 +45,24 @@ namespace CustomAccelerators
         private void MainListBox_PreviewKeyUp(object sender, KeyRoutedEventArgs e)
         {
             e.Handled = true;
-            if (currentad == null)
-                return;
+            if (!AcceleratorsManager.AllowSpecialKeys &&(e.Key == VirtualKey.NumberKeyLock || e.Key == VirtualKey.Scroll || e.Key == VirtualKey.Pause
+                || e.Key == VirtualKey.CapitalLock || e.Key == VirtualKey.Print || e.Key == VirtualKey.Tab))
+                return;//don't let special keys to be the shortcut (it doesn't work witch KA)
+            if (currentAd == null)
+                return;//no selected defininition
             if (e.Key == VirtualKey.Control || e.Key == VirtualKey.Shift || e.Key == VirtualKey.Menu || e.Key == VirtualKey.LeftWindows
                  || e.Key == VirtualKey.RightWindows)
-                return;
+                return;//do nothing on modifier keyup
+
+            // the sum of modifier is uniq in modifiers enum
             var sum = (Window.Current.CoreWindow.GetKeyState(VirtualKey.Control).HasFlag(CoreVirtualKeyStates.Down) ? (int)VirtualKeyModifiers.Control : 0)
            + (Window.Current.CoreWindow.GetKeyState(VirtualKey.Shift).HasFlag(CoreVirtualKeyStates.Down) ? (int)VirtualKeyModifiers.Shift : 0)
            + (Window.Current.CoreWindow.GetKeyState(VirtualKey.Menu).HasFlag(CoreVirtualKeyStates.Down) ? (int)VirtualKeyModifiers.Menu : 0)
            + ((Window.Current.CoreWindow.GetKeyState(VirtualKey.RightWindows).HasFlag(CoreVirtualKeyStates.Down)
             || Window.Current.CoreWindow.GetKeyState(VirtualKey.LeftWindows).HasFlag(CoreVirtualKeyStates.Down)) ? (int)VirtualKeyModifiers.Windows : 0);
 
-            currentad.Modifiers = (VirtualKeyModifiers)sum;
-            currentad.Key = e.Key;
-            e.Handled = true;
-
+            currentAd.Modifiers = (VirtualKeyModifiers)sum;
+            currentAd.Key = e.Key;
         }
     }
 }

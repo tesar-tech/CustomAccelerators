@@ -51,11 +51,6 @@ namespace CustomAccelerators.Sample
             PressedCountHelloButton.Text = (++pressedCountHelloButton).ToString();
         }
 
-        private void AnotherButton_Click(object sender, RoutedEventArgs e)
-        {
-            PressedCountAnotherButton.Text = (++pressedCountAnotherButton).ToString();
-        }
-
         private void OpenSettings_Click(object sender, RoutedEventArgs e)
         {
             splitView.IsPaneOpen = true;

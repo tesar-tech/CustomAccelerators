@@ -9,7 +9,7 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-        <SplitView Visibility="Collapsed" x:Name="splitView" PaneBackground="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
+        <SplitView x:Name="splitView" PaneBackground="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}"
            IsPaneOpen="False" OpenPaneLength="300"  DisplayMode="Overlay">
         <SplitView.Pane>
             <StackPanel Orientation="Vertical">
@@ -22,16 +22,18 @@
             <Button   Click="OpenSettings_Click">Open Settings</Button>
             <Button Click="HelloButton_Click" Margin="5">
                 <TextBlock >
-                <Run Text="{x:Bind CaHellos.TooltipString, Mode=OneWay}"  />
+                <Run Text="{x:Bind CaHello.TooltipString, Mode=OneWay}"  />
                 <Run Text="I have been pressed:"  />
                 <Run Text="0" x:Name="PressedCountHelloButton" />
                 <Run Text="x"  />
                 </TextBlock>
                 <Button.KeyboardAccelerators>
-                    <ca:CustomAccelerator x:Name="CaHellos"  Identity="Hellos"/>
+                    <ca:CustomAccelerator x:Name="CaHello"  Identity="Hello"/>
                 </Button.KeyboardAccelerators>
             </Button>
-            <Button    x:Name="SimpleButton" Content="Click me" Click="SimpleButton_Click"/>
+            
+            <Button ca:Extension.Identity="SimpleAccelerator" ca:Extension.IsEnabled="True"
+                    x:Name="SimpleButton" Content="Generate RND number" Click="SimpleButton_Click"/>
         </StackPanel>
     </SplitView>
 

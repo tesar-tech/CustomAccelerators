@@ -15,10 +15,13 @@ namespace CustomAccelerators
     /// </summary>
     public class AcceleratorDefinition : INotifyPropertyChanged
     {
-        public AcceleratorDefinition(string identity, string label="")
+        
+        public AcceleratorDefinition(string identity, string label, VirtualKey keyFromDefinition, VirtualKeyModifiers modifiersFromDefinition ) 
         {
             Identity = identity;
-            Label = string.IsNullOrEmpty(label)?identity:label;
+            Label = string.IsNullOrEmpty(label) ? identity : label;
+            this.keyDefault = keyFromDefinition;
+            this.modifiersDefault = modifiersFromDefinition;
         }
 
         /// <summary>
@@ -39,10 +42,7 @@ namespace CustomAccelerators
                 if (_key == value) return;
                 Set(ref _key, value);
                 LocalSettingsStorage.WriteToLocalSettingKey(this);
-                if(CustomAccelerator!=null)
-                CustomAccelerator.SetKey(value);
-                if (CustomAcceleratorSecondary != null)
-                    CustomAcceleratorSecondary.SetKey(value);
+                CustomAccelerators.ForEach(x => x.SetKey(value));
             }
         }
 
@@ -52,6 +52,15 @@ namespace CustomAccelerators
         }
 
         VirtualKeyModifiers _modifiers;
+        private readonly VirtualKey keyDefault;// used when user wants to reset shortcut
+        private readonly VirtualKeyModifiers modifiersDefault;
+
+        public void SetKeyAndModifiersToDefault()
+        {
+            Modifiers = modifiersDefault;
+            Key = keyDefault;
+        }
+
 
         public VirtualKeyModifiers Modifiers
         {
@@ -61,10 +70,7 @@ namespace CustomAccelerators
                 if (_modifiers == value) return;
                 Set(ref _modifiers, value);
                 LocalSettingsStorage.WriteToLocalSettingModifiers(this);
-                if(CustomAccelerator!=null)
-                    CustomAccelerator.SetModifiers(value);
-                if (CustomAcceleratorSecondary != null)
-                    CustomAcceleratorSecondary.SetModifiers(value);
+                    CustomAccelerators.ForEach( x=> x.SetModifiers(value));
             }
         }
         //internal void RefreshAllTooltips()
@@ -77,8 +83,8 @@ namespace CustomAccelerators
         /// It is all bcs of: https://stackoverflow.com/questions/53735503/keyboard-accelerator-stops-working-in-uwp-app/62025749#62025749
         /// </summary>
         //public List<CustomAccelerator> CustomAccelerators { get; set; } = new List<CustomAccelerator>();
-        public CustomAccelerator CustomAccelerator { get; set; }
-        public CustomAccelerator CustomAcceleratorSecondary { get; internal set; }
+        public List<CustomAccelerator> CustomAccelerators { get; set; } = new List<CustomAccelerator>();
+        //public List<CustomAcceleratorSecondary> SecondaryAccelerators { get; internal set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

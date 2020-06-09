@@ -11,11 +11,14 @@ using Windows.ApplicationModel.Resources;
 using Windows.Security.Cryptography.Certificates;
 using Windows.Storage;
 using Windows.System;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace CustomAccelerators
 {
     public class AcceleratorsManager
     {
+        public static bool AllowSpecialKeys = false;
         internal static List<CustomAccelerator> HangingAccelerators { get; set; } = new List<CustomAccelerator>();
 
         /// <summary>
@@ -58,10 +61,17 @@ namespace CustomAccelerators
             }
             else
             {
-                if(ca.GetType()== typeof(CustomAcceleratorSecondary))
-                    definitionForCa.CustomAcceleratorSecondary = ca;
+                var frame = Window.Current.Content as Frame;
+
+                if (frame != null)
+                    ca.TypeOfPageOfAccelerator = frame.SourcePageType;
                 else
-                definitionForCa.CustomAccelerator = ca;
+                {
+                }
+                Debug.WriteLine("ACC [age" + ca.TypeOfPageOfAccelerator.Name);
+
+                definitionForCa.CustomAccelerators.RemoveAll(x => x.TypeOfPageOfAccelerator != ca.TypeOfPageOfAccelerator);
+                definitionForCa.CustomAccelerators.Add(ca);
                 ca.SetKeyModifierLabel(definitionForCa.Key, definitionForCa.Modifiers, definitionForCa.Label);
             }
 
@@ -83,8 +93,7 @@ namespace CustomAccelerators
             }
             foreach (var (identity, label, keyFromDefinition, modifiersFromDefinition) in defaults)
             {
-
-                AcceleratorDefinition accDef = new AcceleratorDefinition(identity, label);
+                AcceleratorDefinition accDef = new AcceleratorDefinition(identity, label, keyFromDefinition, modifiersFromDefinition);
                 var keyFromStorageSetting = LocalSettingsStorage.GetStoredKeyForIdentity(identity);
                 accDef.Key = keyFromStorageSetting != VirtualKey.None ? keyFromStorageSetting : keyFromDefinition;
 
@@ -99,6 +108,17 @@ namespace CustomAccelerators
                 HangingAccelerators.Clear();//it is not necessary (will not be used in future)
             }
             _isLoaded = true;
+        }
+
+        /// <summary>
+        /// Reset all to default that was set when constructing accelerators definition
+        /// </summary>
+        public static void ResetAllDefinitionsToDefaults()
+        {
+            foreach (var def in AcceleratorsDefinitions)
+            {
+                def.SetKeyAndModifiersToDefault();
+            }
         }
 
         /// <summary>

@@ -9,31 +9,23 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <Grid >
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <TextBlock x:Name="TxblStatus" Foreground="Red" />
         <ListBox Grid.Row="1" PreviewKeyDown="MainListBox_PreviewKeyDown" PreviewKeyUp="MainListBox_PreviewKeyUp"  SelectionChanged="MainListBox_SelectionChanged"  x:Name="MainListBox">
             <ListBox.ItemTemplate>
                 <DataTemplate x:DataType="local:AcceleratorDefinition">
-                    <!--KeyDown="CustomAcceleratorsEditControl_KeyDown" KeyUp="CustomAcceleratorsEditControl_KeyUp"-->
                     <Border BorderThickness="0,0,0,1" BorderBrush="{ThemeResource ButtonBorderThemeBrush}">
-                    <StackPanel Orientation="Horizontal" >
-                        <StackPanel.KeyboardAccelerators>
-                            <KeyboardAccelerator Key="Down" IsEnabled="False"/>
-                            <KeyboardAccelerator Key="Up" IsEnabled="False"/>
-                        </StackPanel.KeyboardAccelerators>
-
-                        <TextBlock TextWrapping="WrapWholeWords" ToolTipService.ToolTip="{x:Bind Label}" Width="100" HorizontalTextAlignment="Left" VerticalAlignment="Center" Text="{x:Bind Label}"/>
-                        <Border VerticalAlignment="Center"  Margin="5" CornerRadius="4" BorderThickness="2" BorderBrush="{ThemeResource SystemAccentColorDark1}">
-                            <TextBlock  Margin="1,4,5,5" VerticalAlignment="Center" >
+                    <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.618*"/>
+                                <ColumnDefinition Width="0.382*"/>
+                            </Grid.ColumnDefinitions>
+                        <TextBlock TextWrapping="WrapWholeWords" ToolTipService.ToolTip="{x:Bind Label}"  HorizontalTextAlignment="Left" VerticalAlignment="Center" Text="{x:Bind Label}"/>
+                        <Border Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"  Margin="5" CornerRadius="4" BorderThickness="2" BorderBrush="{ThemeResource SystemAccentColorDark1}">
+                            <TextBlock TextWrapping="WrapWholeWords" Margin="1,4,5,5" VerticalAlignment="Center" >
                                 <Run Text="{x:Bind DontDisplayNone( Modifiers), Mode=OneWay}" />
                                 <Run Text="{x:Bind Key, Mode=OneWay}" />
                             </TextBlock>
                         </Border>
-                    </StackPanel>
+                    </Grid>
                     </Border>
                 </DataTemplate>
             </ListBox.ItemTemplate>
@@ -43,8 +35,5 @@
                     <Setter Property="Padding"  Value="5,1,5,1" />
                 </Style>
             </ListBox.ItemContainerStyle>
-
         </ListBox>
-
-    </Grid>
 </UserControl>

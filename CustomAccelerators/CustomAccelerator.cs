@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
@@ -8,6 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.UserDataTasks;
 using Windows.System;
+using Windows.UI.Core;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 
@@ -16,12 +19,18 @@ namespace CustomAccelerators
     public class CustomAccelerator : KeyboardAccelerator, INotifyPropertyChanged
     {
 
+        
         public CustomAccelerator()
         {
+                        
+            
         }
         public CustomAccelerator(Button btn, string identity, bool isEnabled)
+        :this()
         {
             buttonParent = btn;
+            if (buttonParent.GetType() == typeof(AppBarButton))
+                appBarButtonParent = (AppBarButton)btn;
             IsEnabled = isEnabled;
             Identity = identity;
         }
@@ -29,6 +38,8 @@ namespace CustomAccelerators
         /// this is for setting tooltip when key changes. This is only set when using Extension
         /// </summary>
         private Button buttonParent;
+
+        private AppBarButton appBarButtonParent;
 
         private string _identity;
         public string Identity
@@ -44,6 +55,7 @@ namespace CustomAccelerators
                 //so it can change the key when user do it within the settings
             }
         }
+        internal Type TypeOfPageOfAccelerator { get; set; }
 
         private string _TooltipString;
         /// <summary>
@@ -55,8 +67,14 @@ namespace CustomAccelerators
             private set
             {
                 Set(ref _TooltipString, value);
-                if(buttonParent!= null)
+                if (buttonParent != null)
+                {
                     ToolTipService.SetToolTip(buttonParent, value);
+                    if (appBarButtonParent != null)
+                        appBarButtonParent.KeyboardAcceleratorTextOverride = AcceleratorString;
+                    //this is necessary for appbar buttons and their shortcut in menuflyout
+                }
+
             }
         }
 
@@ -64,12 +82,15 @@ namespace CustomAccelerators
         /// method for refreshing tooltip string when key or modifiers are changed
         /// When accelerator is disabled => dont add shortcut to tooltip
         /// </summary>
-        private void ConstructTooltipString() => TooltipString = IsEnabled ? $"{Label} ({GetAcceleratorString()})" : $"{Label}";
+        private void ConstructTooltipString() => TooltipString = $"{Label} ({AcceleratorString})";
 
-        string GetAcceleratorString()
+        string AcceleratorString
         {
-            var modStr = base.Modifiers == VirtualKeyModifiers.None ? "" : base.Modifiers.ToString() + " + ";
-            return modStr + base.Key.ToString();
+            get
+            {
+                var modStr = base.Modifiers == VirtualKeyModifiers.None ? "" : base.Modifiers.ToString() + " + ";
+                return modStr + base.Key.ToString();
+            }
         }
 
         internal void RefreshTooltip()
@@ -141,8 +162,5 @@ namespace CustomAccelerators
             storage = value;
             OnPropertyChanged(propertyName);
         }
-    }
-    public class CustomAcceleratorSecondary:CustomAccelerator
-    {
     }
 }
