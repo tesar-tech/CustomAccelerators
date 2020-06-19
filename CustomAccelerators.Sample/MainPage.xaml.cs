@@ -45,7 +45,6 @@ namespace CustomAccelerators.Sample
         }
 
         int pressedCountHelloButton = 0;
-        int pressedCountAnotherButton = 0;
         private void HelloButton_Click(object sender, RoutedEventArgs e)
         {
             PressedCountHelloButton.Text = (++pressedCountHelloButton).ToString();

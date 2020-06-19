@@ -1,10 +1,10 @@
 # Custom Accelerators
 
-Library and XAML control for keyboard shortcuts customization.
+Library and XAML control for keyboard ⌨ shortcuts customization.
 
-![demo](demo.gif)
+Try it in [Video Detail Player](https://www.microsoft.com/en-us/p/video-detail-player/9p34ghb2h88r) or in the sample app.
 
-See it in live action ([Video Detail Player](https://www.microsoft.com/en-us/p/video-detail-player/9p34ghb2h88r))
+<img src="vdp_changing_shortcuts.gif" width="500">
 
 ## Usage
 
@@ -67,17 +67,16 @@ AcceleratorsManager.AddDefaultsAndLoadFromStorage(acceleratorsList);
   ```xml
    <Button ca:Extension.Identity="SimpleAccelerator" ca:Extension.IsEnabled="True"/>
   ```
-
+- Attached property has one great feature  - it changes tooltip of button (and appbarButton) when accelerator is changed (this behaviour is not supported with basic accelerators).
 - Why is it neccessary to set accelerators somewhere in C# code?
-  - Main reason is necessity to reach all accelerators in one place (for edit control). In such case you are able to set all the accelerators from all pages.
+  - Main reason is necessity to reach all accelerators in one place (for edit control). Accelerators from all pages, event those, that aren't loaded yet. 
 - Why set the accelerators in `OnNavigatedTo` method?
   - It's not requisite. You can set this also in `OnLaunched` of `App.xaml.cs`, but note there are some IO operations (loading settings) that may delay the startup.
-- Shortcut in tooltip will be refreshed with new accelerator. This is true only when using attached property, but can be accomplished also with binding to button's tooltip (original KeyboardAccelerator doesn't support this refresh).
 - It saves the shortcuts persistently (using local settings).
 - You can't edit the appearance of `CustomAcceleratorsEditControl` (yet).
-- Dont't set `Key`, `Modifiers` or `Label` in xaml. Only within definition.
+- Dont't set `Key`, `Modifiers` or `Label` in xaml. Only within definitions.
 - It doesn't check if there are more action with same shortcut. In such case, just one action will be invoked.
-- There are cases when you want to use two accelerator that invoke same action, you can use `CustomAcceleratorSecondary`.
+- There are cases when you want to use two accelerator that invoke same action. No problem.
   - It's primary made for this special `CommandBar` [bug and its workarround](https://stackoverflow.com/questions/53735503/keyboard-accelerator-stops-working-in-uwp-app/62025749#62025749).
 - What about localization?
   - You can do it this way:
@@ -88,3 +87,5 @@ AcceleratorsManager.AddDefaultsAndLoadFromStorage(acceleratorsList);
   ```
 
   - The [ResourceExtractor](https://github.com/tesar-tech/ResourceExtractor#custom-accelerators) is also prepared for this and will automatically modify the `.resw` with Identities and Labels.
+
+- It's not perfect, I know 🙃 . If you have anything to say about it, don't be shy and open an issue. 
